@@ -8,9 +8,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint-js": "eslint src --ext .ts,.tsx",
-    "lint-css": "stylelint src/**/*.css",
     "lint-styled": "stylelint './src/**/*.{tsx,ts}'",
-    "lint": "yarn lint-js && yarn lint-css && yarn lint-styled",
+    "lint": "yarn lint-js && yarn lint-styled",
     "postinstall": "husky install"
   },
   "dependencies": {
@@ -47,7 +46,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix",
-    "*.css": "stylelint --fix",
     "styled.ts": "stylelint --syntax=css-in-js --fix"
   },
   "eslintConfig": {
