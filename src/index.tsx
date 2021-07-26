@@ -2,6 +2,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
+import './index.css';
 import { GlobalStyle } from 'styled';
 
 import App from './App';
