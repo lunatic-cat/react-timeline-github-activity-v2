@@ -1,0 +1,113 @@
+{
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["react", "import"],
+  "settings": {
+    "import/extensions": [".ts", ".tsx"],
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["src"]
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
+  "globals": {
+    "module": "readonly",
+    "process": "readonly",
+    "__dirname": "readonly",
+    "global": "readonly",
+    "exports": "readonly"
+  },
+  "rules": {
+    // eslint
+    "no-unreachable-loop": "error",
+    "no-unsafe-optional-chaining": ["error", { "disallowArithmeticOperators": true }],
+    "no-useless-backreference": "error",
+    "default-case-last": "error",
+    "no-eq-null": "error",
+    "no-implicit-coercion": "error",
+    "init-declarations": "error",
+    "array-bracket-newline": ["error", "consistent"],
+    "array-element-newline": [
+      "error",
+      { "ArrayExpression": "consistent", "ArrayPattern": { "multiline": true, "minItems": 3 } }
+    ],
+    "func-style": ["error", "expression"],
+    "function-call-argument-newline": ["error", "consistent"],
+    "id-length": ["error", { "min": 2, "max": 40, "exceptions": ["i", "x", "y", "z", "e", "r"] }],
+    "max-depth": "error",
+    "max-nested-callbacks": ["error", 3],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var", "import"] },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": ["return", "export", "for", "if", "switch", "try", "while"]
+      },
+      { "blankLine": "always", "prev": "import", "next": "*" },
+      { "blankLine": "any", "prev": "import", "next": "import" },
+      { "blankLine": "never", "prev": "*", "next": "case"},
+      { "blankLine": "never", "prev": "*", "next": "default"}
+    ],
+    "prefer-exponentiation-operator": "error",
+    "no-duplicate-imports": "error",
+    // react
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+    ],
+    "react/no-multi-comp": "error",
+    "react/jsx-no-useless-fragment": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    // import
+    "import/default": "error",
+    "import/namespace": ["error", { "allowComputed": true }],
+    // "import/no-unused-modules": ["error", { "unusedExports": true }],
+    "import/no-unused-modules": "off",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          }, {
+            "pattern": "React",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["React", "react"],
+        "groups": ["builtin", "external", "internal", "index", "object", "unknown", ["parent", "sibling"]]
+      }
+    ],
+    "import/no-anonymous-default-export": "error",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/prefer-default-export": "off"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  }
+}
