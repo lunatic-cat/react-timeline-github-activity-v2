@@ -59,17 +59,17 @@ export const TimelinePoint = styled.div`
   width: 32px;
   height: 32px;
 
-  background-color: ${colors.orange.base};
+  background-color: ${colors.blue.dark};
   border-radius: 50%;
 `;
 
 const rightArrow = `
-  border-left: 10px solid #a13f4c;
+  border-left: 10px solid ${colors.dark.light};
   top: 14px;
   right: -20px;
 `;
 const leftArrow = `
-  border-right: 10px solid #a13f4c;
+  border-right: 10px solid ${colors.dark.light};
   top: 14px;
   left: -20px;
 `;
@@ -83,7 +83,7 @@ export const TimelinePointCardContainer = styled.div<{ side: 'left' | 'rigth' }>
   width: 100%;
   height: 150px;
 
-  background-color: #a13f4c;
+  background-color: ${colors.dark.light};
   border-radius: 12px;
 
   &::before {
