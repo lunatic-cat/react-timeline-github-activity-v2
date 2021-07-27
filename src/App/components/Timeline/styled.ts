@@ -63,17 +63,6 @@ export const TimelinePoint = styled.div`
   border-radius: 50%;
 `;
 
-const rightArrow = `
-  border-left: 10px solid ${colors.dark.light};
-  top: 14px;
-  right: -20px;
-`;
-const leftArrow = `
-  border-right: 10px solid ${colors.dark.light};
-  top: 14px;
-  left: -20px;
-`;
-
 export const TimelinePointCardContainer = styled.div<{ side: 'left' | 'rigth' }>`
   position: relative;
 
@@ -87,14 +76,20 @@ export const TimelinePointCardContainer = styled.div<{ side: 'left' | 'rigth' }>
   border-radius: 12px;
 
   &::before {
-    content: "";
-
     position: absolute;
+    top: 14px;
+
+    right: ${(props) => (props.side === 'left' ? '-10px' : 'auto')};
+    left: ${(props) => (props.side === 'left' ? 'auto' : '-10px')};
 
     width: 0;
     height: 0;
 
     border: 10px solid transparent;
-    ${(props) => (props.side === 'left' ? rightArrow : leftArrow)}
+    border-right: ${(props) => (props.side === 'left' ? 'none' : `10px solid ${colors.dark.light}`)};
+
+    border-left: ${(props) => (props.side === 'left' ? `10px solid ${colors.dark.light}` : 'none')};
+
+    content: "";
   }
 `;
