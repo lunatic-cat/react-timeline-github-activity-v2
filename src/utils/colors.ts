@@ -1,7 +1,7 @@
 const colors = {
   dark: {
-    light: '#011936',
-    base: '#011125',
+    light: '#011a37',
+    base: '#010e1e',
   },
   blue: {
     base: '#6dbbfb',
