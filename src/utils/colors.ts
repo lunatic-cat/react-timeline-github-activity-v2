@@ -1,5 +1,6 @@
 const colors = {
   dark: {
+    lightest: '#012146',
     light: '#011a37',
     base: '#010e1e',
   },

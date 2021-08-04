@@ -16,7 +16,7 @@ export const CardContainer = styled.div<{ side: Side }>`
   justify-self: ${(props) => (props.side === 'left' ? 'end' : 'start')};
   width: 100%;
 
-  background-color: ${colors.dark.light};
+  background-color: ${colors.dark.lightest};
   border-radius: 12px;
 
   &::before {
@@ -30,9 +30,9 @@ export const CardContainer = styled.div<{ side: Side }>`
     height: 0;
 
     border: 10px solid transparent;
-    border-right: ${(props) => (props.side === 'left' ? 'none' : `10px solid ${colors.dark.light}`)};
+    border-right: ${(props) => (props.side === 'left' ? 'none' : `10px solid ${colors.dark.lightest}`)};
 
-    border-left: ${(props) => (props.side === 'left' ? `10px solid ${colors.dark.light}` : 'none')};
+    border-left: ${(props) => (props.side === 'left' ? `10px solid ${colors.dark.lightest}` : 'none')};
 
     content: "";
   }
@@ -42,8 +42,13 @@ export const HeaderContainer = styled(Space)`
   position: sticky;
   top: 0;
 
-  gap: 6px;
+  gap: 4px !important;
   padding: 12px;
+
+  background-color: ${colors.dark.lightest};
+  border-bottom: 1px solid ${colors.dark.base};
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px 8px ${colors.dark.base};
 
   a {
     color: ${colors.blue.base};
@@ -58,15 +63,14 @@ export const HeaderContainer = styled(Space)`
 `;
 
 export const AvatarIcon = styled(Avatar)`
-  margin-right: 12px;
+  margin-right: 8px;
 `;
 
 export const Author = styled(Typography.Link)``;
 
 export const StoryContainer = styled(Space)`
-  margin: 12px 24px 24px 24px;
-  padding: 12px;
+  padding: 16px 32px;
 
-  border-radius: 4px;
-  box-shadow: 0 4px 8px 4px #011125;
+  background-color: ${colors.dark.light};
+  border-radius: 0 0 12px 12px;
 `;
