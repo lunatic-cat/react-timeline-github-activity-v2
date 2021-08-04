@@ -2,11 +2,11 @@
 
 import { Typography } from 'antd';
 
+import Card from './Card';
 import {
   Container,
   TimelineContainer,
   TimelinePoint,
-  TimelinePointCardContainer,
   TimelinePointContainer,
   TimelinePointGridContainer,
   VerticalLine,
@@ -29,7 +29,7 @@ const TimelineComponent: React.FC = () => (
           </div>
         </TimelinePointContainer>
       </TimelinePointGridContainer>
-      <TimelinePointCardContainer side="rigth">{' '}</TimelinePointCardContainer>
+      <Card side="right">{' '}</Card>
     </TimelineContainer>
 
     <TimelineContainer>
@@ -42,7 +42,7 @@ const TimelineComponent: React.FC = () => (
           </div>
         </TimelinePointContainer>
       </TimelinePointGridContainer>
-      <TimelinePointCardContainer side="left">{' '}</TimelinePointCardContainer>
+      <Card side="left">{' '}</Card>
     </TimelineContainer>
 
     <TimelineContainer>
@@ -55,7 +55,7 @@ const TimelineComponent: React.FC = () => (
           </div>
         </TimelinePointContainer>
       </TimelinePointGridContainer>
-      <TimelinePointCardContainer side="rigth">{' '}</TimelinePointCardContainer>
+      <Card side="right">{' '}</Card>
     </TimelineContainer>
 
     <TimelineContainer>
@@ -68,7 +68,7 @@ const TimelineComponent: React.FC = () => (
           </div>
         </TimelinePointContainer>
       </TimelinePointGridContainer>
-      <TimelinePointCardContainer side="left">{' '}</TimelinePointCardContainer>
+      <Card side="left">{' '}</Card>
     </TimelineContainer>
   </Container>
 );
