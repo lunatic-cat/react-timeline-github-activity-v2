@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice, PayloadAction,
+} from '@reduxjs/toolkit';
 
 type DataState = [];
 
@@ -8,12 +10,12 @@ export const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    dataFetched: (state, action: PayloadAction) => {
+    dataLoaded: (state, action: PayloadAction) => {
       console.log(state, action);
     },
   },
 });
 
-export const { dataFetched } = counterSlice.actions;
+export const { dataLoaded } = counterSlice.actions;
 
 export default counterSlice.reducer;
