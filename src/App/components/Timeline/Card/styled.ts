@@ -39,7 +39,6 @@ export const CardContainer = styled.div<{ side: Side }>`
 `;
 
 export const HeaderContainer = styled(Space)`
-  position: sticky;
   top: 0;
 
   gap: 4px !important;
@@ -48,7 +47,6 @@ export const HeaderContainer = styled(Space)`
   background-color: ${colors.dark.lightest};
   border-bottom: 1px solid ${colors.dark.base};
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 -4px 24px 8px ${colors.dark.base};
 
   a {
     color: ${colors.blue.base};
