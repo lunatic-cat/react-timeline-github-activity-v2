@@ -18,7 +18,11 @@ const usersSlice = createSlice({
         name: '',
       }))
     ),
-    userInfoFetched: (state, action: PayloadAction<GithubUser & { login: string }>) => {},
+    userInfoFetched: (state, action: PayloadAction<GithubUser & { login: string }>) => {
+      const user = state.find((item) => item.login === action.payload.login);
+
+      if (user) user.name = action.payload.name;
+    },
   },
 });
 
