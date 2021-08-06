@@ -6,8 +6,8 @@ type DataState = [];
 
 const initialState: DataState = [];
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const dataSlice = createSlice({
+  name: 'data',
   initialState,
   reducers: {
     dataLoaded: (state, action: PayloadAction) => {
@@ -16,6 +16,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { dataLoaded } = counterSlice.actions;
+export const { dataLoaded } = dataSlice.actions;
 
-export default counterSlice.reducer;
+export default dataSlice.reducer;
