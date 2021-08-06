@@ -15,6 +15,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "antd": "^4.16.8",
+    "humps": "^2.0.1",
     "ky": "^0.28.5",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
@@ -26,6 +27,7 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@types/humps": "^2.0.1",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
     "@types/node": "^16.4.3",

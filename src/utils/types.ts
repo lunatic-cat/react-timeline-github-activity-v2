@@ -1,3 +1,8 @@
+export type ObjectWithIds<KeyType extends string | number | symbol, ValueType> = {
+  byIds: Record<KeyType, ValueType>;
+  ids: KeyType[];
+};
+
 export type HistoryType = {
   key: string;
   author: string;

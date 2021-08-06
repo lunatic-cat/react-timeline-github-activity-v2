@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { camelizeKeys } from 'humps';
 import ky from 'ky';
 
 import { GithubTeamMember } from 'utils/types';
 
 import data from './slices/data';
-import users from './slices/users';
+import users, { teamMembersFetched } from './slices/users';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +17,7 @@ export const store = configureStore({
 export const fetchMembers = async (teamName: string) => {
   const teamMembers = await ky.get(`https://api.github.com/orgs/${teamName}/members`).json<GithubTeamMember[]>();
 
-  console.log(teamMembers);
+  store.dispatch(teamMembersFetched(camelizeKeys(teamMembers) as GithubTeamMember[]));
 };
 
 export type RootState = ReturnType<typeof store.getState>;

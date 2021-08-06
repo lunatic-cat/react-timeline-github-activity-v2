@@ -10,15 +10,20 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    teamMembersFetched: (state, action: PayloadAction<GithubTeamMember[]>) => {
-      console.log(state, action);
-    },
-    userInfoFetched: (state, action: PayloadAction<GithubUser>) => {
-      console.log(state, action);
-    },
+    teamMembersFetched: (state, action: PayloadAction<GithubTeamMember[]>) => (
+      action.payload.map(({ login, htmlUrl, avatarUrl }) => ({
+        login,
+        htmlUrl,
+        avatarUrl,
+        name: '',
+      }))
+    ),
+    userInfoFetched: (state, action: PayloadAction<GithubUser & { login: string }>) => {},
   },
 });
 
 export const { teamMembersFetched, userInfoFetched } = usersSlice.actions;
 
 export default usersSlice.reducer;
+
+// { login, htmlUrl, avatarUrl }
