@@ -112,3 +112,5 @@ export type GithubRelease = {
   name: string;
   body: string;
 };
+
+export type EventsByUserName = Record<string, GithubEvent[]>;

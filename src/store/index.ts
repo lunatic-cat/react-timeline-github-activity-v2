@@ -2,32 +2,50 @@ import { configureStore } from '@reduxjs/toolkit';
 import { camelizeKeys } from 'humps';
 import ky from 'ky';
 
-import { GithubTeamMember, GithubUser } from 'utils/types';
+import { GithubEvent, GithubTeamMember, GithubUser } from 'utils/types';
 
-import data from './slices/data';
+import events, { userEventsLoaded, allEventsLoaded } from './slices/events';
 import users, { teamMembersFetched, userInfoFetched } from './slices/users';
 
 export const store = configureStore({
   reducer: {
-    data,
+    events,
     users,
   },
 });
 
-export const fetchUserName = async (login: string): Promise<void> => {
-  const userInfo = await ky.get(`https://api.github.com/users/${login}`).json<GithubUser>();
+const fetchUserEvents = async (login: string): Promise<void> => {
+  const userEvents = camelizeKeys(
+    await ky.get(`https://api.github.com/users/${login}/events?per_page=20`).json(),
+  ) as GithubEvent[];
+
+  store.dispatch(userEventsLoaded({ events: userEvents, userName: login }));
+};
+
+const fetchUserName = async (login: string): Promise<void> => {
+  const userInfo = camelizeKeys(
+    await ky.get(`https://api.github.com/users/${login}`).json<GithubUser>(),
+  ) as GithubUser;
 
   store.dispatch(userInfoFetched({ name: userInfo.name, login }));
 };
 
 export const fetchMembers = async (teamName: string): Promise<void> => {
-  const teamMembers = await ky.get(`https://api.github.com/orgs/${teamName}/members`).json<GithubTeamMember[]>();
+  const teamMembers = camelizeKeys(
+    await ky.get(`https://api.github.com/orgs/${teamName}/members`).json(),
+  ) as GithubTeamMember[];
 
   store.dispatch(teamMembersFetched(camelizeKeys(teamMembers) as GithubTeamMember[]));
 
-  Promise.all(
+  await Promise.all(
     teamMembers.map((user) => fetchUserName(user.login)),
-  ).catch(() => {});
+  ).catch(() => { });
+
+  Promise.all(
+    teamMembers.map((user) => fetchUserEvents(user.login)),
+  )
+    .then(() => store.dispatch(allEventsLoaded()))
+    .catch(() => { });
 };
 
 export type RootState = ReturnType<typeof store.getState>;
