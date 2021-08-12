@@ -14,13 +14,13 @@ export const store = configureStore({
   },
 });
 
-export const fetchUserName = async (login: string) => {
+export const fetchUserName = async (login: string): Promise<void> => {
   const userInfo = await ky.get(`https://api.github.com/users/${login}`).json<GithubUser>();
 
   store.dispatch(userInfoFetched({ name: userInfo.name, login }));
 };
 
-export const fetchMembers = async (teamName: string) => {
+export const fetchMembers = async (teamName: string): Promise<void> => {
   const teamMembers = await ky.get(`https://api.github.com/orgs/${teamName}/members`).json<GithubTeamMember[]>();
 
   store.dispatch(teamMembersFetched(camelizeKeys(teamMembers) as GithubTeamMember[]));

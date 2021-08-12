@@ -29,5 +29,3 @@ const usersSlice = createSlice({
 export const { teamMembersFetched, userInfoFetched } = usersSlice.actions;
 
 export default usersSlice.reducer;
-
-// { login, htmlUrl, avatarUrl }
