@@ -1,17 +1,10 @@
-import { createSlice, original, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { sortEventsByDatetime } from 'utils';
 import { EventsByUserName, GithubEvent } from 'utils/types';
 
-type EventsState = {
-  eventsSortedByDatetime: GithubEvent[];
-  eventsByUserName: EventsByUserName;
-};
+type EventsState = EventsByUserName;
 
-const initialState: EventsState = {
-  eventsSortedByDatetime: [],
-  eventsByUserName: {},
-};
+const initialState: EventsState = {};
 
 export const eventsSlice = createSlice({
   name: 'data',
@@ -22,33 +15,22 @@ export const eventsSlice = createSlice({
       action: PayloadAction<{ events: GithubEvent[]; userName: string }>,
     ) => ({
       ...state,
-      eventsByUserName: {
-        ...state.eventsByUserName,
-        [action.payload.userName]: action.payload.events.map(({
-          createdAt, payload, repo, type,
-        }) => {
-          const event: GithubEvent = {
-            createdAt,
-            payload,
-            repo,
-            type,
-          };
+      [action.payload.userName]: action.payload.events.map(({
+        createdAt, payload, repo, type,
+      }) => {
+        const event: GithubEvent = {
+          createdAt,
+          payload,
+          repo,
+          type,
+        };
 
-          return event;
-        }),
-      },
+        return event;
+      }),
     }),
-    allEventsLoaded: (state) => {
-      const eventsSortedByDatetime = sortEventsByDatetime(original(state.eventsByUserName) || {});
-
-      return {
-        ...state,
-        eventsSortedByDatetime,
-      };
-    },
   },
 });
 
-export const { userEventsLoaded, allEventsLoaded } = eventsSlice.actions;
+export const { userEventsLoaded } = eventsSlice.actions;
 
 export default eventsSlice.reducer;

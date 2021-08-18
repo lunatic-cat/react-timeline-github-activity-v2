@@ -4,13 +4,15 @@ import ky from 'ky';
 
 import { GithubEvent, GithubTeamMember, GithubUser } from 'utils/types';
 
-import events, { userEventsLoaded, allEventsLoaded } from './slices/events';
+import events, { userEventsLoaded } from './slices/events';
 import users, { teamMembersFetched, userInfoFetched } from './slices/users';
+import ui, { allEventsLoaded } from './slices/ui';
 
 export const store = configureStore({
   reducer: {
     events,
     users,
+    ui,
   },
 });
 
