@@ -1,6 +1,7 @@
 import getEventsByName from 'store/selectors/eventsByDate';
 import { useTypedSelector } from 'utils/hooks';
 
+import Loader from '../Loader';
 import Card from './Card';
 import TimelinePoint from './Point';
 import {
@@ -12,7 +13,7 @@ import {
 const TimelineComponent: React.FC = () => {
   const events = useTypedSelector(getEventsByName);
 
-  console.log(events);
+  if (!events) return <Loader />;
 
   return (
     <Container>
