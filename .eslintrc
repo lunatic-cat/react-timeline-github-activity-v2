@@ -70,6 +70,7 @@
     "react/jsx-no-useless-fragment": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "react/no-array-index-key": "off",
     // import
     "import/default": "error",
     "import/namespace": ["error", { "allowComputed": true }],

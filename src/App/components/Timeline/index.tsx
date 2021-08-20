@@ -1,4 +1,7 @@
+import keyBy from 'lodash/keyBy';
+
 import getEventsByName from 'store/selectors/eventsByDate';
+import { formatDate, getTimelinePointInfoByDate } from 'utils';
 import { useTypedSelector } from 'utils/hooks';
 
 import Loader from '../Loader';
@@ -11,33 +14,45 @@ import {
 } from './styled';
 
 const TimelineComponent: React.FC = () => {
-  const events = useTypedSelector(getEventsByName);
+  const eventsByDate = useTypedSelector(getEventsByName);
+  const users = keyBy(useTypedSelector((state) => state.users), 'login');
 
-  if (!events) return <Loader />;
+  let index = 1;
+
+  if (!eventsByDate) return <Loader />;
 
   return (
     <Container>
       <VerticalLine />
 
-      <TimelineContainer>
-        <TimelinePoint dayOfTheWeek="Tuesday" date="May 21th 2021" />
-        <Card side="right" />
-      </TimelineContainer>
+      {eventsByDate.map((eventsByAuthors) => {
+        const authors = Object.keys(eventsByAuthors);
 
-      <TimelineContainer>
-        <TimelinePoint dayOfTheWeek="Tuesday" date="May 15th 2021" />
-        <Card side="left" />
-      </TimelineContainer>
+        return authors.map((author, i) => {
+          const side = index % 2 === 0 ? 'left' : 'right';
+          const user = users[author];
+          const date = formatDate(eventsByAuthors[author][0].createdAt);
+          const timelinePointInfo = getTimelinePointInfoByDate(date);
 
-      <TimelineContainer>
-        <TimelinePoint dayOfTheWeek="Tuesday" date="May 13th 2021" />
-        <Card side="right" />
-      </TimelineContainer>
+          index += 1;
 
-      <TimelineContainer>
-        <TimelinePoint dayOfTheWeek="Tuesday" date="May 9th 2021" />
-        <Card side="left" />
-      </TimelineContainer>
+          return (
+            <TimelineContainer key={i}>
+              <TimelinePoint
+                dayOfTheWeek={timelinePointInfo.dayOfTheWeek}
+                date={timelinePointInfo.date}
+              />
+              <Card
+                side={side}
+                avatar={user.avatarUrl}
+                link={user.htmlUrl}
+                name={user.login}
+                realName={user.name}
+              />
+            </TimelineContainer>
+          );
+        });
+      })}
     </Container>
   );
 };
