@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { GithubTeamMember, GithubUser } from 'utils/types';
+import { GithubTeamMember, GithubUser, UserType } from 'utils/types';
 
-type UsersState = (GithubTeamMember & GithubUser)[];
+type UsersState = UserType[];
 
 const initialState: UsersState = [];
 

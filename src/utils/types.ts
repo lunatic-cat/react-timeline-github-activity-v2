@@ -1,18 +1,3 @@
-export type ObjectWithIds<KeyType extends string | number | symbol, ValueType> = {
-  byIds: Record<KeyType, ValueType>;
-  ids: KeyType[];
-};
-
-export type HistoryType = {
-  key: string;
-  author: string;
-  text: string;
-  repo: {
-    name: string;
-    link: string;
-  };
-};
-
 // https://docs.github.com/en/rest/reference/teams#list-team-members
 export type GithubTeamMember = {
   login: string;
@@ -113,4 +98,14 @@ export type GithubRelease = {
   body: string;
 };
 
-export type EventsByUserName = Record<string, GithubEvent[]>;
+export type UserName = string;
+
+export type TimeType = string;
+
+export type DateType = string;
+
+export type UserType = GithubTeamMember & GithubUser;
+
+export type EventsByUserName = Record<UserName, GithubEvent[]>;
+
+export type TimelineByDate = (Record<UserName, GithubEvent[]>)[];

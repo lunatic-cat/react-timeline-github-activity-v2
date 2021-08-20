@@ -96,7 +96,9 @@
     ],
     "import/no-anonymous-default-export": "error",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    // typescript
+    "@typescript-eslint/no-unsafe-assignment": "off"
   },
   "env": {
     "browser": true,
