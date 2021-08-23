@@ -33,6 +33,7 @@ const TimelineComponent: React.FC = () => {
           const user = users[author];
           const date = formatDate(eventsByAuthors[author][0].createdAt);
           const timelinePointInfo = getTimelinePointInfoByDate(date);
+          const events = eventsByAuthors[author];
 
           index += 1;
 
@@ -48,6 +49,7 @@ const TimelineComponent: React.FC = () => {
                 link={user.htmlUrl}
                 name={user.login}
                 realName={user.name}
+                events={events}
               />
             </TimelineContainer>
           );

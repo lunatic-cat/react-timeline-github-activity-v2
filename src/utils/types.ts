@@ -109,3 +109,13 @@ export type UserType = GithubTeamMember & GithubUser;
 export type EventsByUserName = Record<UserName, GithubEvent[]>;
 
 export type TimelineByDate = (Record<UserName, GithubEvent[]>)[];
+
+export type URL = {
+  name: string;
+  href: string;
+};
+
+export type EventDescription = {
+  title: URL;
+  body: (URL & { msg: string })[];
+};
