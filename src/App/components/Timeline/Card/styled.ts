@@ -66,9 +66,23 @@ export const AvatarIcon = styled(Avatar)`
 
 export const Author = styled(Typography.Link)``;
 
-export const StoryContainer = styled(Space)`
-  padding: 16px 32px;
+export const BodyContainer = styled(Space)`
+  padding: 24px 32px;
 
   background-color: ${colors.dark.light};
   border-radius: 0 0 12px 12px;
+`;
+
+export const EventDescriptonContainer = styled(Space)``;
+
+export const EventDescriptonTitle = styled(Typography.Link)``;
+
+export const EventDescriptonBodyContainer = styled(Space)`
+  margin: 0 16px;
+`;
+
+export const EventDescriptonBodyTitle = styled(Typography.Link)``;
+
+export const EventDescriptonBodyMessage = styled(Typography.Paragraph)`
+  margin: 0 !important;
 `;

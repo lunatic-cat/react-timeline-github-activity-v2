@@ -5,7 +5,12 @@ import mapValues from 'lodash/mapValues';
 import omit from 'lodash/omit';
 
 import {
-  DateType, EventDescription, EventsByUserName, GithubEvent, TimelineByDate, UserName,
+  DateType,
+  EventDescriptionType,
+  EventsByUserName,
+  GithubEvent,
+  TimelineByDate,
+  UserName,
 } from './types';
 
 export const getTeamName = (): string | null => {
@@ -57,11 +62,12 @@ export const sortEventsByDatetime = (eventsByUserName: EventsByUserName): Timeli
   return values(eventsByDate);
 };
 
-export const parseGithubEvent = (event: GithubEvent): EventDescription | null => {
+export const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
   switch (event.type) {
     case 'PushEvent': {
       const { name } = event.repo;
       const href = `https://github.com/${name}`;
+      const prefix = 'Pushed new commits to';
 
       const body = event.payload.commits?.map((commit) => ({
         name: commit.sha.slice(0, 6),
@@ -69,7 +75,7 @@ export const parseGithubEvent = (event: GithubEvent): EventDescription | null =>
         msg: commit.message,
       })) || [];
 
-      return { title: { name, href }, body };
+      return { title: { prefix, name, href }, body };
     }
     default:
       return null;

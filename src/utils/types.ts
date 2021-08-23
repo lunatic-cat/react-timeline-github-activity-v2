@@ -115,7 +115,7 @@ export type URL = {
   href: string;
 };
 
-export type EventDescription = {
-  title: URL;
+export type EventDescriptionType = {
+  title: (URL & { prefix: string });
   body: (URL & { msg: string })[];
 };
