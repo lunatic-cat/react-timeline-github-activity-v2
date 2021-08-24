@@ -71,6 +71,14 @@ export const parseGithubRepoInfo = (repoInfo: { name: string, url: string }): UR
   return { name, href };
 };
 
+export const formatToPlural = (nonPluralText: string): string => {
+  if (nonPluralText.includes('a new commit')) return nonPluralText.replace('a new commit', 'new commits');
+
+  if (nonPluralText.includes('a new branch')) return nonPluralText.replace('a new branch', 'new branches');
+
+  return nonPluralText;
+};
+
 export const groupSameEvents = (events: EventDescriptionType[]): EventDescriptionType[] => {
   if (events.length === 1) return events;
 
@@ -86,5 +94,13 @@ export const groupSameEvents = (events: EventDescriptionType[]): EventDescriptio
     if (sameEvent?.body) sameEvent.body = [...sameEvent.body, ...event.body];
   });
 
-  return groupedEvents;
+  return groupedEvents.map((event) => ({
+    ...event,
+    title: {
+      ...event.title,
+      prefix: event.body.length > 1
+        ? formatToPlural(event.title.prefix)
+        : event.title.prefix,
+    },
+  }));
 };

@@ -2,7 +2,7 @@ import { Space, Typography } from 'antd';
 
 import { EventDescriptionType } from 'utils/types';
 
-import { BodyContainer, BodyMessage } from './styled';
+import { BodyContainer } from './styled';
 
 type EventDescriptionPropTypes = {
   event: EventDescriptionType;
@@ -34,15 +34,9 @@ const EventDescription: React.FC<EventDescriptionPropTypes> = ({
     {body.map(({ name, href, msg }, index) => (
       <BodyContainer direction="horizontal" align="start" key={index}>
         <Typography.Link href={href}>{name}</Typography.Link>
-        <BodyMessage
-          ellipsis={{
-            rows: 3,
-            expandable: true,
-            symbol: 'show',
-          }}
-        >
+        <Typography.Text>
           {msg}
-        </BodyMessage>
+        </Typography.Text>
       </BodyContainer>
     ))}
   </Space>
