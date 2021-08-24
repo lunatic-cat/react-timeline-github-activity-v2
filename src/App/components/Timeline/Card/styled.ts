@@ -72,17 +72,3 @@ export const BodyContainer = styled(Space)`
   background-color: ${colors.dark.light};
   border-radius: 0 0 12px 12px;
 `;
-
-export const EventDescriptonContainer = styled(Space)``;
-
-export const EventDescriptonTitle = styled(Typography.Link)``;
-
-export const EventDescriptonBodyContainer = styled(Space)`
-  margin: 0 16px;
-`;
-
-export const EventDescriptonBodyTitle = styled(Typography.Link)``;
-
-export const EventDescriptonBodyMessage = styled(Typography.Paragraph)`
-  margin: 0 !important;
-`;

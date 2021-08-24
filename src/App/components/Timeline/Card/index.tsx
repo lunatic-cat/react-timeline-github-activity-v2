@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Space, Typography } from 'antd';
+import { Typography } from 'antd';
 
 import { EventDescriptionType } from 'utils/types';
 
@@ -11,12 +11,8 @@ import {
   CardContainer,
   HeaderContainer,
   BodyContainer,
-  EventDescriptonContainer,
-  EventDescriptonTitle,
-  EventDescriptonBodyContainer,
-  EventDescriptonBodyTitle,
-  EventDescriptonBodyMessage,
 } from './styled';
+import EventDescription from './EventDescription';
 
 type CardPropTypes = {
   side: Side;
@@ -43,33 +39,8 @@ const CardComponent: FC<CardPropTypes> = ({
       </Typography.Text>
     </HeaderContainer>
     <BodyContainer direction="vertical" size="large">
-      {events.map(({ title, body }, i) => (
-        <EventDescriptonContainer direction="vertical" key={i}>
-          <Space direction="horizontal">
-            <Typography.Text style={{ fontSize: 16, lineHeight: '1' }}>
-              {title.prefix}
-              {' '}
-              <EventDescriptonTitle href={title.href} style={{ fontSize: 16, lineHeight: 1 }}>
-                {title.name}
-              </EventDescriptonTitle>
-            </Typography.Text>
-          </Space>
-
-          {body.map((smth, index) => (
-            <EventDescriptonBodyContainer direction="horizontal" align="start" key={index}>
-              <EventDescriptonBodyTitle href={smth.href}>
-                {smth.name}
-              </EventDescriptonBodyTitle>
-              <EventDescriptonBodyMessage ellipsis={{
-                rows: 3, expandable: true, symbol: 'show',
-              }}
-              >
-                {smth.msg}
-              </EventDescriptonBodyMessage>
-            </EventDescriptonBodyContainer>
-          ))}
-
-        </EventDescriptonContainer>
+      {events.map((event, i) => (
+        <EventDescription event={event} key={i} />
       ))}
     </BodyContainer>
   </CardContainer>
