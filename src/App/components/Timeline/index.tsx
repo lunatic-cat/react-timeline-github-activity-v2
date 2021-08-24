@@ -3,7 +3,9 @@ import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 
 import getEventsByName from 'store/selectors/eventsByDate';
-import { formatDate, getTimelinePointInfoByDate, parseGithubEvent } from 'utils';
+import {
+  formatDate, getTimelinePointInfoByDate, groupSameEvents, parseGithubEvent,
+} from 'utils';
 import { useTypedSelector } from 'utils/hooks';
 
 import Loader from '../Loader';
@@ -40,6 +42,7 @@ const TimelineComponent: React.FC = () => {
           if (isEmpty(events)) return null;
 
           index += 1;
+          const groupedEvents = groupSameEvents(events);
 
           return (
             <TimelineContainer key={i}>
@@ -53,7 +56,7 @@ const TimelineComponent: React.FC = () => {
                 link={user.htmlUrl}
                 name={user.login}
                 realName={user.name}
-                events={events}
+                events={groupedEvents}
               />
             </TimelineContainer>
           );

@@ -3,6 +3,7 @@ import flatten from 'lodash/flatten';
 import { compareDesc, format } from 'date-fns';
 import mapValues from 'lodash/mapValues';
 import omit from 'lodash/omit';
+import isEqual from 'lodash/isEqual';
 
 import {
   DateType,
@@ -80,4 +81,22 @@ export const parseGithubEvent = (event: GithubEvent): EventDescriptionType | nul
     default:
       return null;
   }
+};
+
+export const groupSameEvents = (events: EventDescriptionType[]): EventDescriptionType[] => {
+  if (events.length === 1) return events;
+
+  const groupedEvents: EventDescriptionType[] = [];
+
+  events.forEach((event) => {
+    const sameEvent = groupedEvents.find((groupedEvent) => (
+      isEqual(groupedEvent.title, event.title)
+    ));
+
+    if (!sameEvent) groupedEvents.push(event);
+
+    if (sameEvent?.body) sameEvent.body = [...sameEvent.body, ...event.body];
+  });
+
+  return groupedEvents;
 };
