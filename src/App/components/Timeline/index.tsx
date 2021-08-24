@@ -3,10 +3,9 @@ import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 
 import getEventsByName from 'store/selectors/eventsByDate';
-import {
-  formatDate, getTimelinePointInfoByDate, groupSameEvents, parseGithubEvent,
-} from 'utils';
+import { formatDate, getTimelinePointInfoByDate, groupSameEvents } from 'utils';
 import { useTypedSelector } from 'utils/hooks';
+import parseGithubEvent from 'utils/parseGithubEvent';
 
 import Loader from '../Loader';
 import Card from './Card';

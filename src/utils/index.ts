@@ -71,29 +71,6 @@ export const parseGithubRepoInfo = (repoInfo: { name: string, url: string }): UR
   return { name, href };
 };
 
-export const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
-  switch (event.type) {
-    case 'PushEvent': {
-      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Pushed new commits to' };
-
-      const body = event.payload.commits?.map((commit) => ({
-        name: commit.sha.slice(0, 6),
-        href: `${title.href}/commit/${commit.sha}`,
-        msg: commit.message,
-      })) || [];
-
-      return { title, body };
-    }
-    case 'PublicEvent': {
-      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Made his private repository public!' };
-
-      return { title, body: [], goldEvent: true };
-    }
-    default:
-      return null;
-  }
-};
-
 export const groupSameEvents = (events: EventDescriptionType[]): EventDescriptionType[] => {
   if (events.length === 1) return events;
 
