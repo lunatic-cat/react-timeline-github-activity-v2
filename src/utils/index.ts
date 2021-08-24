@@ -12,6 +12,7 @@ import {
   GithubEvent,
   TimelineByDate,
   UserName,
+  URL,
 } from './types';
 
 export const getTeamName = (): string | null => {
@@ -63,20 +64,30 @@ export const sortEventsByDatetime = (eventsByUserName: EventsByUserName): Timeli
   return values(eventsByDate);
 };
 
+export const parseGithubRepoInfo = (repoInfo: { name: string, url: string }): URL => {
+  const { name } = repoInfo;
+  const href = `https://github.com/${name}`;
+
+  return { name, href };
+};
+
 export const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
   switch (event.type) {
     case 'PushEvent': {
-      const { name } = event.repo;
-      const href = `https://github.com/${name}`;
-      const prefix = 'Pushed new commits to';
+      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Pushed new commits to' };
 
       const body = event.payload.commits?.map((commit) => ({
         name: commit.sha.slice(0, 6),
-        href: `${href}/commit/${commit.sha}`,
+        href: `${title.href}/commit/${commit.sha}`,
         msg: commit.message,
       })) || [];
 
-      return { title: { prefix, name, href }, body };
+      return { title, body };
+    }
+    case 'PublicEvent': {
+      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Made his private repository public!' };
+
+      return { title, body: [], goldEvent: true };
     }
     default:
       return null;

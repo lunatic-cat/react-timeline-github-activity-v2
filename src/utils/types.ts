@@ -118,4 +118,5 @@ export type URL = {
 export type EventDescriptionType = {
   title: (URL & { prefix: string });
   body: (URL & { msg: string })[];
+  goldEvent?: boolean;
 };
