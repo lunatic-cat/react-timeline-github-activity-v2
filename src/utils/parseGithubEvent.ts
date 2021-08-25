@@ -32,12 +32,32 @@ const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
         ...parseGithubRepoInfo(event.repo),
         prefix: createEventType === 'branch'
           ? 'Created a new branch in'
-          : 'Created new repository',
+          : 'Created a new repository',
       };
 
       const body = createEventType === 'branch' ? [{
         name: `${event.payload.ref || ''}`,
         href: `${title.href}/tree/${event.payload.ref || ''}`,
+        msg: '',
+      }] : [];
+
+      return { title, body };
+    }
+    case 'DeleteEvent': {
+      const deleteEventType = event.payload.refType;
+
+      if (deleteEventType === 'tag') return null;
+
+      const title = {
+        ...parseGithubRepoInfo(event.repo),
+        prefix: deleteEventType === 'branch'
+          ? 'Deleted a branch in'
+          : 'Deleted the repository',
+      };
+
+      const body = deleteEventType === 'branch' ? [{
+        name: `${event.payload.ref || ''}`,
+        href: '',
         msg: '',
       }] : [];
 

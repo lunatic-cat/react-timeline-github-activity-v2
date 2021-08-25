@@ -76,6 +76,12 @@ export const formatToPlural = (nonPluralText: string): string => {
 
   if (nonPluralText.includes('a new branch')) return nonPluralText.replace('a new branch', 'new branches');
 
+  if (nonPluralText.includes('a branch')) return nonPluralText.replace('a branch', 'several branches');
+
+  if (nonPluralText.includes('a new repository')) return nonPluralText.replace('a new repository', 'new repositories');
+
+  if (nonPluralText.includes('the repository')) return nonPluralText.replace('the repository', 'the repositories');
+
   return nonPluralText;
 };
 

@@ -25,18 +25,24 @@ const EventDescription: React.FC<EventDescriptionPropTypes> = ({
       >
         {title.prefix}
         {' '}
-        <Typography.Link href={title.href} style={{ fontSize: 16, lineHeight: 1 }}>
-          {title.name}
-        </Typography.Link>
+        {title.href ? (
+          <Typography.Link href={title.href} style={{ fontSize: 16, lineHeight: 1 }}>
+            {title.name}
+          </Typography.Link>
+        ) : (
+          <Typography.Text style={{ fontSize: 16, lineHeight: 1 }}>{title.name}</Typography.Text>
+        )}
       </Typography.Text>
     </Space>
 
     {body.map(({ name, href, msg }, index) => (
       <BodyContainer direction="horizontal" align="start" key={index}>
-        <Typography.Link href={href}>{name}</Typography.Link>
-        <Typography.Text>
-          {msg}
-        </Typography.Text>
+        {href ? (
+          <Typography.Link href={href}>{name}</Typography.Link>
+        ) : (
+          <Typography.Text>{name}</Typography.Text>
+        )}
+        <Typography.Text>{msg}</Typography.Text>
       </BodyContainer>
     ))}
   </Space>
