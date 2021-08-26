@@ -22,6 +22,19 @@ export const VerticalLine = styled.span`
 
   background-color: ${colors.blue.base};
   border: 1px solid ${colors.blue.base};
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+
+    width: 8px;
+    height: 100px;
+
+    background: linear-gradient(to top, ${colors.dark.base} 15%, transparent);
+
+    content: "";
+  }
 `;
 
 export const TimelineContainer = styled.div`
