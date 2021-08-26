@@ -26,7 +26,7 @@ type CardPropTypes = {
 const CardComponent: FC<CardPropTypes> = ({
   side, avatar, link, name, realName, events,
 }) => (
-  <CardContainer side={side}>
+  <CardContainer side={side} animateIn={side === 'left' ? 'fadeInLeft' : 'fadeInRight'} animateOnce offset={60} duration={0.75}>
     <HeaderContainer direction="horizontal" align="center" size="small">
       <AvatarIcon size={40} src={avatar} draggable={false} />
       <Author href={link} target="_blank">

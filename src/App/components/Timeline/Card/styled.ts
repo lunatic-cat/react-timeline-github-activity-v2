@@ -1,11 +1,12 @@
 import { Space, Avatar, Typography } from 'antd';
+import ScrollAnimation from 'react-animate-on-scroll';
 import styled from 'styled-components';
 
 import colors from 'utils/colors';
 
 import { Side } from '../types';
 
-export const CardContainer = styled.div<{ side: Side }>`
+export const CardContainer = styled(ScrollAnimation)<{ side: Side }>`
   position: relative;
 
   display: flex;
@@ -16,7 +17,6 @@ export const CardContainer = styled.div<{ side: Side }>`
   justify-self: ${(props) => (props.side === 'left' ? 'end' : 'start')};
   width: 100%;
 
-  background-color: ${colors.dark.lightest};
   border-radius: 12px;
 
   &::before {
