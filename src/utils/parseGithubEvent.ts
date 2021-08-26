@@ -4,24 +4,15 @@ import { EventDescriptionType, GithubEvent } from './types';
 
 const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
   switch (event.type) {
-    case 'PushEvent': {
-      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Pushed a new commit to' };
-
-      const body = event.payload.commits?.map((commit) => ({
-        name: commit.sha.slice(0, 6),
-        href: `${title.href}/commit/${commit.sha}`,
-        msg: commit.message,
-      })) || [];
+    case 'CommitCommentEvent': {
+      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Left a comment under the commit in' };
+      const body = event.payload.comment && event.payload.comment.commitId ? [{
+        name: event.payload.comment.commitId.slice(0, 6) || '',
+        href: event.payload.comment.htmlUrl || '',
+        msg: event.payload.comment.body || '',
+      }] : [];
 
       return { title, body };
-    }
-    case 'PublicEvent': {
-      const title = {
-        ...parseGithubRepoInfo(event.repo),
-        prefix: 'Made his private repository public!',
-      };
-
-      return { title, body: [], goldEvent: true };
     }
     case 'CreateEvent': {
       const createEventType = event.payload.refType;
@@ -62,6 +53,25 @@ const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
       }] : [];
 
       return { title, body };
+    }
+    case 'PushEvent': {
+      const title = { ...parseGithubRepoInfo(event.repo), prefix: 'Pushed a new commit to' };
+
+      const body = event.payload.commits?.map((commit) => ({
+        name: commit.sha.slice(0, 6),
+        href: `${title.href}/commit/${commit.sha}`,
+        msg: commit.message,
+      })) || [];
+
+      return { title, body };
+    }
+    case 'PublicEvent': {
+      const title = {
+        ...parseGithubRepoInfo(event.repo),
+        prefix: 'Made his private repository public!',
+      };
+
+      return { title, body: [], goldEvent: true };
     }
     default:
       return null;

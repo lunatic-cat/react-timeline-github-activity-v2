@@ -82,6 +82,8 @@ export const formatToPlural = (nonPluralText: string): string => {
 
   if (nonPluralText.includes('the repository')) return nonPluralText.replace('the repository', 'the repositories');
 
+  if (nonPluralText.includes('a comment')) return nonPluralText.replace('a comment', 'comments');
+
   return nonPluralText;
 };
 

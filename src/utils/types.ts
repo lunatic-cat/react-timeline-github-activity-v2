@@ -85,6 +85,7 @@ export type GithubIssueAndPR = {
 export type GithubComment = {
   htmlUrl: string;
   body: string;
+  commitId?: string;
 };
 
 export type GithubReview = {
