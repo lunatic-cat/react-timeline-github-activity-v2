@@ -105,7 +105,7 @@ export type TimeType = string;
 
 export type DateType = string;
 
-export type UserType = GithubTeamMember & GithubUser;
+export type UserType = GithubTeamMember & GithubUser & { isAllEventsLoaded: boolean };
 
 export type EventsByUserName = Record<UserName, GithubEvent[]>;
 

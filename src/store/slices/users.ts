@@ -16,6 +16,7 @@ const usersSlice = createSlice({
         htmlUrl,
         avatarUrl,
         name: '',
+        isAllEventsLoaded: false,
       }))
     ),
     userInfoFetched: (state, action: PayloadAction<GithubUser & { login: string }>) => {
@@ -23,9 +24,14 @@ const usersSlice = createSlice({
 
       if (user) user.name = action.payload.name;
     },
+    allUserEventsLoaded: (state, action: PayloadAction<{ login: string }>) => {
+      const user = state.find((item) => item.login === action.payload.login);
+
+      if (user) user.isAllEventsLoaded = true;
+    },
   },
 });
 
-export const { teamMembersFetched, userInfoFetched } = usersSlice.actions;
+export const { teamMembersFetched, userInfoFetched, allUserEventsLoaded } = usersSlice.actions;
 
 export default usersSlice.reducer;

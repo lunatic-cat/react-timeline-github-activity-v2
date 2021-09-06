@@ -1,10 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import pick from 'lodash/pick';
 
 import { EventsByUserName, GithubEvent } from 'utils/types';
 
-type EventsState = EventsByUserName;
+import { allEventsLoaded } from './ui';
 
-const initialState: EventsState = {};
+type EventsState = {
+  events: EventsByUserName;
+  page: number;
+};
+
+const initialState: EventsState = {
+  events: {},
+  page: 1,
+};
+
+const parseGithubEvents = (events: GithubEvent[]): GithubEvent[] => (
+  events.map((event) => (pick(event, ['createdAt', 'payload', 'repo', 'type'])))
+);
 
 export const eventsSlice = createSlice({
   name: 'data',
@@ -15,20 +28,20 @@ export const eventsSlice = createSlice({
       action: PayloadAction<{ events: GithubEvent[]; userName: string }>,
     ) => ({
       ...state,
-      [action.payload.userName]: action.payload.events.map(({
-        createdAt, payload, repo, type,
-      }) => {
-        const event: GithubEvent = {
-          createdAt,
-          payload,
-          repo,
-          type,
-        };
-
-        return event;
-      }),
+      events: {
+        ...state.events,
+        [action.payload.userName]: [
+          ...(state.events[action.payload.userName] || []),
+          ...parseGithubEvents(action.payload.events),
+        ],
+      },
     }),
   },
+  extraReducers: (builder) => (
+    builder.addCase(allEventsLoaded, (state) => ({
+      ...state, page: state.page + 1,
+    }))
+  ),
 });
 
 export const { userEventsLoaded } = eventsSlice.actions;

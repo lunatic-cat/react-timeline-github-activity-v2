@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { sortEventsByDatetime } from 'utils';
 
-const eventsSelector = (state: RootState) => state.events;
+const eventsSelector = (state: RootState) => state.events.events;
 const isAllEventsFetchedSelector = (state: RootState) => state.ui.isAllEventsLoaded;
 
 const getEventsByName = createSelector(
