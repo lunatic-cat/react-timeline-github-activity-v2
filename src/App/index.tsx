@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import upperCase from 'lodash/upperCase';
 import isEmpty from 'lodash/isEmpty';
 
-import { getTeamName } from 'utils';
-import { fetchAllUserEvents, fetchMembers } from 'store';
+import { getTeamName, handleInfiniteScroll } from 'utils';
+import { fetchMembers } from 'store';
 import { useTypedSelector } from 'utils/hooks';
 
 import Title from './components/Title';
@@ -23,24 +23,16 @@ const App: React.FC = () => {
   }, [teamName]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = Math.abs(document.documentElement.getBoundingClientRect().top)
-        + document.documentElement.clientHeight;
-      const { scrollHeight } = document.documentElement;
-      const screenHeight = window.screen.height;
-
-      if (!scrollHeight || scrollHeight === document.documentElement.clientHeight) return;
-
-      if (isLoaded
-        && !isAllAdditionalUserEventsLoaded
-        && scrollPosition > scrollHeight - screenHeight
-      ) fetchAllUserEvents().catch(() => null);
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener(
+      'scroll',
+      () => handleInfiniteScroll(isLoaded, isAllAdditionalUserEventsLoaded),
+    );
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener(
+        'scroll',
+        () => handleInfiniteScroll(isLoaded, isAllAdditionalUserEventsLoaded),
+      );
     };
   }, [isAllAdditionalUserEventsLoaded, isLoaded]);
 
@@ -49,7 +41,11 @@ const App: React.FC = () => {
       <Title teamName={upperCase(teamName)} />
       <Timeline />
     </Container>
-  ) : null;
+  ) : (
+    <Container>
+      <Title teamName="YOUR" />
+    </Container>
+  );
 };
 
 export default App;

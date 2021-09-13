@@ -5,6 +5,8 @@ import mapValues from 'lodash/mapValues';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 
+import { fetchAllUserEvents } from 'store';
+
 import {
   DateType,
   EventDescriptionType,
@@ -111,4 +113,22 @@ export const groupSameEvents = (events: EventDescriptionType[]): EventDescriptio
         : event.title.prefix,
     },
   }));
+};
+
+export const handleInfiniteScroll = (
+  isLoaded: boolean,
+  isAllAdditionalUserEventsLoaded: boolean,
+): void => {
+  const scrollPosition = Math.abs(document.documentElement.getBoundingClientRect().top)
+    + document.documentElement.clientHeight;
+  const { scrollHeight } = document.documentElement;
+  const screenHeight = window.screen.height;
+
+  if (!scrollHeight || scrollHeight === document.documentElement.clientHeight) return;
+
+  if (
+    isLoaded
+    && !isAllAdditionalUserEventsLoaded
+    && scrollPosition > scrollHeight - screenHeight
+  ) fetchAllUserEvents().catch(() => null);
 };
