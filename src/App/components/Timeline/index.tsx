@@ -4,8 +4,9 @@ import isEmpty from 'lodash/isEmpty';
 
 import getEventsByName from 'store/selectors/eventsByDate';
 import { formatDate, getTimelinePointInfoByDate, groupSameEvents } from 'utils';
-import { useTypedSelector } from 'utils/hooks';
+import { useBreakpoint, useTypedSelector } from 'utils/hooks';
 import parseGithubEvent from 'utils/parseGithubEvent';
+import { isBigMobile, isTwoColumns } from 'consts';
 
 import Loader from '../Loader';
 import Card from './Card';
@@ -20,6 +21,8 @@ const TimelineComponent: React.FC = () => {
   const eventsByDate = useTypedSelector(getEventsByName);
   const users = keyBy(useTypedSelector((state) => state.users), 'login');
 
+  useBreakpoint();
+
   let index = 1;
 
   if (!eventsByDate) return <Loader />;
@@ -32,13 +35,16 @@ const TimelineComponent: React.FC = () => {
         const authors = Object.keys(eventsByAuthors);
 
         return authors.map((author, i) => {
-          const side = index % 2 === 0 ? 'left' : 'right';
+          const side = index % 2 === 0 && !isTwoColumns() ? 'left' : 'right';
+          let animation = side === 'left' ? 'fadeInLeft' : 'fadeInRight';
           const user = users[author];
           const date = formatDate(eventsByAuthors[author][0].createdAt);
-          const timelinePointInfo = getTimelinePointInfoByDate(date);
+          const timelinePointInfo = getTimelinePointInfoByDate(date, isBigMobile() ? 'MMM do' : 'MMM do yyyy');
           const events = compact(eventsByAuthors[author].map((event) => parseGithubEvent(event)));
 
           if (isEmpty(events)) return null;
+
+          if (isTwoColumns()) animation = '';
 
           index += 1;
           const groupedEvents = groupSameEvents(events);
@@ -46,7 +52,7 @@ const TimelineComponent: React.FC = () => {
           return (
             <TimelineContainer key={i}>
               <TimelinePoint
-                dayOfTheWeek={timelinePointInfo.dayOfTheWeek}
+                dayOfTheWeek={!isBigMobile() ? timelinePointInfo.dayOfTheWeek : ''}
                 date={timelinePointInfo.date}
               />
               <Card
@@ -56,6 +62,8 @@ const TimelineComponent: React.FC = () => {
                 name={user.login}
                 realName={user.name}
                 events={groupedEvents}
+                animationName={animation}
+                isVisibleByDefault={isTwoColumns()}
               />
             </TimelineContainer>
           );

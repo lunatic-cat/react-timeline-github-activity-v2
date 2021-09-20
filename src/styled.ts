@@ -1,8 +1,18 @@
 import { createGlobalStyle } from 'styled-components';
 
+import { bigMobile } from 'consts/breakpoints';
 import colors from 'utils/colors';
 
 export const GlobalStyle = createGlobalStyle`
+  html,
+  body {
+    font-size: 100%;
+
+    @media (max-width: ${bigMobile}) {
+      font-size: 70%;
+    }
+  }
+
   body {
     margin: 0;
 

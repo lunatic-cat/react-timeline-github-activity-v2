@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
+import { tablet } from 'consts/breakpoints';
 import colors from 'utils/colors';
 
 export const PointGridContainer = styled.div`
   grid-column: 2;
+
+  @media (max-width: ${tablet}) {
+    grid-column: 1;
+  }
 `;
 
 export const PointContainer = styled.div`
@@ -16,9 +21,11 @@ export const PointContainer = styled.div`
 
   span {
     margin-top: 4px;
+    padding: 0 8px;
 
     font-size: 18px;
     line-height: 1;
+    text-align: center;
   }
 
   span:first-child {

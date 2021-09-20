@@ -2,6 +2,7 @@ import { Space, Avatar, Typography } from 'antd';
 import ScrollAnimation from 'react-animate-on-scroll';
 import styled from 'styled-components';
 
+import { bigMobile, mobile, tablet } from 'consts/breakpoints';
 import colors from 'utils/colors';
 
 import { Side } from '../types';
@@ -19,6 +20,12 @@ export const CardContainer = styled(ScrollAnimation)<{ side: Side }>`
 
   border-radius: 12px;
 
+  span,
+  a {
+    font-size: 16px;
+    line-height: normal !important;
+  }
+
   &::before {
     position: absolute;
     top: 14px;
@@ -31,10 +38,31 @@ export const CardContainer = styled(ScrollAnimation)<{ side: Side }>`
 
     border: 10px solid transparent;
     border-right: ${(props) => (props.side === 'left' ? 'none' : `10px solid ${colors.dark.lightest}`)};
-
     border-left: ${(props) => (props.side === 'left' ? `10px solid ${colors.dark.lightest}` : 'none')};
 
     content: "";
+  }
+
+  @media (max-width: ${tablet}) {
+    grid-column: 2;
+    justify-self: start;
+    padding-right: 64px;
+
+    &::before {
+      right: auto;
+      left: -10px;
+
+      border-right: 10px solid ${colors.dark.lightest};
+      border-left: none;
+    }
+  }
+
+  @media (max-width: ${bigMobile}) {
+    padding-right: 32px;
+  }
+
+  @media (max-width: ${mobile}) {
+    padding-right: 16px;
   }
 `;
 
@@ -71,4 +99,15 @@ export const BodyContainer = styled(Space)`
 
   background-color: ${colors.dark.light};
   border-radius: 0 0 12px 12px;
+
+  @media (max-width: ${tablet}) {
+    padding: 16px 20px;
+  }
+`;
+
+export const AuthorName = styled(Typography.Text)``;
+
+export const AuthorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 
 import { fetchAllUserEvents } from 'store';
+import { isTwoColumns } from 'consts';
 
 import {
   DateType,
@@ -28,9 +29,10 @@ export const formatDate = (date: string): string => format(new Date(date), 'yyyy
 
 export const getTimelinePointInfoByDate = (
   stringDate: string,
+  dateFormat: string,
 ): { dayOfTheWeek: string; date: string } => {
   const dayOfTheWeek = format(new Date(stringDate), 'EEEE');
-  const date = format(new Date(stringDate), 'MMM do yyyy');
+  const date = format(new Date(stringDate), dateFormat);
 
   return { dayOfTheWeek, date };
 };
@@ -67,8 +69,10 @@ export const sortEventsByDatetime = (eventsByUserName: EventsByUserName): Timeli
 };
 
 export const parseGithubRepoInfo = (repoInfo: { name: string, url: string }): URL => {
-  const { name } = repoInfo;
+  let { name } = repoInfo;
   const href = `https://github.com/${name}`;
+
+  if (isTwoColumns()) [, name] = name.split('/');
 
   return { name, href };
 };
