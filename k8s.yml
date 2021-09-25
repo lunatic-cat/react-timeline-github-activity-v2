@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-timeline-github-activity-v2
+  namespace: lunatic-cat
+spec:
+  selector:
+    matchLabels:
+      app: react-timeline-github-activity-v2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: react-timeline-github-activity-v2
+    spec:
+      imagePullSecrets:
+      - name: react-timeline-docker-registry
+      containers:
+      - image: registry.lunatic.cat/lunatic-cat/react-timeline-github-activity-v2
+        name: react-timeline-github-activity-v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /var/cache/nginx
+          name: nginx-home-and-cache
+      volumes:
+      - name: nginx-home-and-cache
+        emptyDir:
+          medium: Memory
+          sizeLimit: "1Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-timeline-github-activity-v2
+  namespace: lunatic-cat
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: react-timeline-github-activity-v2
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: react-timeline-github-activity-v2-matomo-php
+  namespace: lunatic-cat
+spec:
+  type: ExternalName
+  externalName: matomo.matomo.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: react-timeline-github-activity-v2-matomo-js
+  namespace: lunatic-cat
+spec:
+  type: ExternalName
+  externalName: matomo-js.matomo.svc.cluster.local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: react-timeline-github-activity-v2
+  namespace: lunatic-cat
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - oss.lunatic.cat
+    secretName: react-timeline-github-activity-v2-ing-tls
+  rules:
+  - host: oss.lunatic.cat
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: react-timeline-github-activity-v2
+            port:
+              number: 80
+      - path: /mtm.js
+        pathType: Prefix
+        backend:
+          service:
+            name: react-timeline-github-activity-v2-matomo-js
+            port:
+              number: 80
+      - path: /mtm.php
+        pathType: Prefix
+        backend:
+          service:
+            name: react-timeline-github-activity-v2-matomo-php
+            port:
+              number: 80

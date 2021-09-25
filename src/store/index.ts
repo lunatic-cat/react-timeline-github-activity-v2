@@ -9,6 +9,8 @@ import events, { userEventsLoaded } from './slices/events';
 import users, { allUserEventsLoaded, teamMembersFetched, userInfoFetched } from './slices/users';
 import ui, { additionalEventsLoading, allEventsLoaded } from './slices/ui';
 
+const apiHost = process.env.REACT_APP_GITHUB_API || '';
+
 export const store = configureStore({
   reducer: {
     events,
@@ -21,7 +23,7 @@ const fetchUserEvents = async (login: string, page: number): Promise<void> => {
   const eventsPerPage = 100;
 
   const userEvents = camelizeKeys(
-    await ky.get(`/users/${login}/events?per_page=${eventsPerPage}&page=${page}`).json(),
+    await ky.get(`${apiHost}/users/${login}/events?per_page=${eventsPerPage}&page=${page}`).json(),
   ) as GithubEvent[];
 
   if (isEmpty(userEvents)) {
@@ -55,7 +57,7 @@ export const fetchAllUserEvents = async (): Promise<void> => {
 
 const fetchUserName = async (login: string): Promise<void> => {
   const userInfo = camelizeKeys(
-    await ky.get(`/users/${login}`).json<GithubUser>(),
+    await ky.get(`${apiHost}/users/${login}`).json<GithubUser>(),
   ) as GithubUser;
 
   store.dispatch(userInfoFetched({ name: userInfo.name, login }));
@@ -63,7 +65,7 @@ const fetchUserName = async (login: string): Promise<void> => {
 
 export const fetchMembers = async (teamName: string): Promise<void> => {
   const teamMembers = camelizeKeys(
-    await ky.get(`/orgs/${teamName}/members`).json(),
+    await ky.get(`${apiHost}/orgs/${teamName}/members`).json(),
   ) as GithubTeamMember[];
 
   store.dispatch(teamMembersFetched(camelizeKeys(teamMembers) as GithubTeamMember[]));
