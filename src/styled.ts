@@ -8,6 +8,8 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-size: 100%;
 
+    background-color: ${colors.dark.base};
+
     @media (max-width: ${bigMobile}) {
       font-size: 70%;
     }
@@ -20,8 +22,6 @@ export const GlobalStyle = createGlobalStyle`
     overflow-y: scroll;
 
     font-family: 'Hind Siliguri', sans-serif;
-
-    background-color: ${colors.dark.base};
   }
 
   ::-webkit-scrollbar {

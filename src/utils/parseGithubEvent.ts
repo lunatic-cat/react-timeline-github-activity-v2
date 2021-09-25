@@ -71,7 +71,7 @@ const parseGithubEvent = (event: GithubEvent): EventDescriptionType | null => {
         prefix: 'Made his private repository public!',
       };
 
-      return { title, body: [], goldEvent: true };
+      return { title, body: [] }; // goldEvent: true
     }
     default:
       return null;

@@ -26,6 +26,7 @@
   },
   "rules": {
     // eslint
+    "no-underscore-dangle": "off",
     "no-unreachable-loop": "error",
     "no-unsafe-optional-chaining": ["error", { "disallowArithmeticOperators": true }],
     "no-useless-backreference": "error",
