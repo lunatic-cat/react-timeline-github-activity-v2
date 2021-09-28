@@ -1,4 +1,5 @@
 import { Space, Typography } from 'antd';
+import Linkify from 'linkify-react';
 
 import { EventDescriptionType } from 'utils/types';
 
@@ -6,6 +7,15 @@ import { BodyContainer } from './styled';
 
 type EventDescriptionPropTypes = {
   event: EventDescriptionType;
+};
+
+const MAX_URL_LEN = 30;
+const truncate = (value: string) => (value.length > MAX_URL_LEN ? `${value.slice(0, MAX_URL_LEN)}…` : value);
+const isLink = (value: string) => /^https?:\/\//.test(value);
+const linkifyOptions = {
+  format: { url: truncate },
+  validate: { url: isLink },
+  attributes: { target: '_blank' },
 };
 
 const EventDescription: React.FC<EventDescriptionPropTypes> = ({
@@ -43,7 +53,7 @@ const EventDescription: React.FC<EventDescriptionPropTypes> = ({
             <Typography.Text>{name}</Typography.Text>
           )}
           {' '}
-          <Typography.Text>{msg.replace(/[a-f0-9]{40}/, '')}</Typography.Text>
+          <Typography.Text><Linkify options={linkifyOptions}>{msg.replace(/[a-f0-9]{40}/, '')}</Linkify></Typography.Text>
         </span>
       </BodyContainer>
     ))}
