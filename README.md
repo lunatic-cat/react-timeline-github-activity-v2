@@ -9,4 +9,4 @@ https://oss.lunatic.cat/lunatic-cat
 
 **IMPORTANT**: Works only with public activity.
 
-Change `lunatic-cat` on your team name and thats all!
+Change `lunatic-cat` from link above on your team name and thats all!
